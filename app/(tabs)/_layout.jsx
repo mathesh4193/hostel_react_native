@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePathname } from 'expo-router';
 
 export default function TabsLayout() {
-  const [role, setRole] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    const storedRole = await AsyncStorage.getItem('role');
-    const token = await AsyncStorage.getItem('token');
-    setRole(storedRole);
-    setIsLoggedIn(!!token);
-  };
+  const pathname = usePathname();
+  const isHomePage = pathname === '/' || pathname === '/index';
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: '#007BFF',
         tabBarInactiveTintColor: 'gray',
+        headerShown: !isHomePage, // Hide header on home page
       }}
     >
       <Tabs.Screen
@@ -40,36 +30,30 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => <MaterialIcons name="info" size={24} color={color} />,
         }}
       />
-
-      {isLoggedIn && (
-        <Tabs.Screen
-          name="attendance"
-          options={{
-            title: 'Attendance',
-            tabBarIcon: ({ color }) => <MaterialIcons name="check" size={24} color={color} />,
-          }}
-        />
-      )}
-
-      {isLoggedIn && role === 'student' && (
-        <Tabs.Screen
-          name="outpass"
-          options={{
-            title: 'Outpass',
-            tabBarIcon: ({ color }) => <MaterialIcons name="exit-to-app" size={24} color={color} />,
-          }}
-        />
-      )}
-
-      {!isLoggedIn && (
-        <Tabs.Screen
-          name="login"
-          options={{
-            title: 'Login',
-            tabBarIcon: ({ color }) => <MaterialIcons name="login" size={24} color={color} />,
-          }}
-        />
-      )}
+      
+      <Tabs.Screen
+        name="leave"
+        options={{
+          title: 'Leave',
+          tabBarIcon: ({ color }) => <MaterialIcons name="event-note" size={24} color={color} />,
+        }}
+      />
+      
+      <Tabs.Screen
+        name="room"
+        options={{
+          title: 'Room',
+          tabBarIcon: ({ color }) => <MaterialIcons name="hotel" size={24} color={color} />,
+        }}
+      />
+      
+      <Tabs.Screen
+        name="dashboard"
+        options={{
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <MaterialIcons name="dashboard" size={24} color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 const About = () => {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const wardens = [
     { name: 'Dr. P. Alli, Principal', designation: 'Chief Warden', contact: '+919443566537', icon: 'person' },
