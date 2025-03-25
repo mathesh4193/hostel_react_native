@@ -29,7 +29,7 @@ const Footer = () => {
   return (
     <View style={footerStyles.footer}>
       <Text style={footerStyles.text}>© 2025 VCET Hostel. All rights reserved.</Text>
-      <Text style={footerStyles.text}>Designed and Developed by MATHESH</Text>
+      <Text style={footerStyles.text}>Designed and Developed by CSE</Text>
     </View>
   );
 };

@@ -21,20 +21,18 @@ Timestamp: ${new Date().toLocaleString()}
 From: VCET Hostel Student
       `;
 
+      // Updated email address
       const mailtoUrl = `mailto:mathinash58@gmail.com?subject=${encodeURIComponent(complaint.subject)}&body=${encodeURIComponent(emailBody)}`;
       
-      const canOpen = await Linking.canOpenURL(mailtoUrl);
+      // Directly open email client without checking if it can open
+      await Linking.openURL(mailtoUrl);
       
-      if (canOpen) {
-        await Linking.openURL(mailtoUrl);
-        setComplaint({ subject: '', description: '' });
-        Alert.alert('Success', 'Email client opened successfully!');
-      } else {
-        Alert.alert('Error', 'No email client found');
-      }
+      // Reset form and show success message
+      setComplaint({ subject: '', description: '' });
+      Alert.alert('Success', 'Your complaint has been submitted successfully!');
     } catch (error) {
       console.error('Email Error:', error);
-      Alert.alert('Error', 'Failed to open email client');
+      Alert.alert('Error', 'Failed to send email. Please try again later.');
     }
   };
 
